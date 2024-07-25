@@ -6,7 +6,6 @@ import JobCard from './JobCard';
 import { Job } from '@/types/types';
 import {Pagination} from "@nextui-org/pagination";
 import moment from "moment";
-import _ from "lodash";
 
 // import { useRouter } from 'next/navigation';
 
