@@ -52,3 +52,8 @@ export default async function JobDetailPage({ params }: JobDetailProps) {
     </div>
   );
 }
+
+export async function generateStaticParams() {
+  const jobs: Job[] = await fetchJobs();
+  return jobs.map(job => ({ id: job.id.toString() }));
+}
