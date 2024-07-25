@@ -5,8 +5,8 @@ import jobsData from '../../data/jobs.json';
 
 export default function HomePage() {
   const jobs: Job[] = jobsData.sort((a, b) => {
-    const dateA = new Date(a.updatedAt.split('.').reverse().join('-'));
-    const dateB = new Date(b.updatedAt.split('.').reverse().join('-'));
+    const dateA = new Date(a.updatedAt.split('.').reverse().join('-')).getTime();
+    const dateB = new Date(b.updatedAt.split('.').reverse().join('-')).getTime();
     return dateB - dateA;
   });
 
