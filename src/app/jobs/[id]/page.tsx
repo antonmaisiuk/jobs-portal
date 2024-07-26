@@ -34,9 +34,9 @@ export default async function JobDetailPage({ params }: JobDetailProps) {
       </> : ''}
 
       {/*<ul>*/}
-        {job.attrs.map((el, idx) => (
-          <div className="flex grid-cols-2 gap-1" key={idx}><div className="font-bold" >{el.name}:</div><div>{el.value}</div></div>
-        ))}
+        {job.attrs ? job.attrs.map((el, idx) => (
+          <div className="flex grid-cols-2 gap-1" key={idx}><div className="font-bold" >{el}</div></div>
+        )) : <p>Brak atrybutów</p>}
       {/*</ul>*/}
       <br/>
       <hr/>
@@ -48,7 +48,7 @@ export default async function JobDetailPage({ params }: JobDetailProps) {
       <br/>
       <hr/>
       <br/>
-      <Link target="_blank" href={job.url} className="px-10 py-2 bg-blue-500 text-white rounded-md">Przejdź na OLX</Link>
+      <Link target="_blank" href={job.url} className="px-10 py-2 bg-blue-500 text-white rounded-md">Przejdź do żródła</Link>
     </div>
   );
 }

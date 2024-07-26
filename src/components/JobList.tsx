@@ -1,7 +1,7 @@
 // components/JobList.tsx
 
 'use client'; // Позволяет использовать клиентский код в компоненте
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import JobCard from './JobCard';
 import { Job } from '@/types/types';
 import {Pagination} from "@nextui-org/pagination";
@@ -16,7 +16,17 @@ interface JobListProps {
 }
 
 export default function JobList({ jobs }: JobListProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(() => {
+    // Извлекаем номер страницы из localStorage при первой загрузке компонента
+    const savedPage = localStorage.getItem('currentPage');
+    return savedPage ? Number(savedPage) : 1;
+  });
+
+  useEffect(() => {
+    // Сохраняем текущий номер страницы в localStorage при его изменении
+    localStorage.setItem('currentPage', String(currentPage));
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   // const router = useRouter();
 
   // const currentPage = 1;
@@ -37,7 +47,26 @@ export default function JobList({ jobs }: JobListProps) {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4 mb-4">
+      <div className="flex justify-between">
+        <button
+          onClick={handlePrevious}
+          disabled={currentPage === 1}
+          // disabled={!!currentPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md"
+        >
+          Previous
+        </button>
+        <span>Page {currentPage}</span>
+        <button
+          onClick={handleNext}
+          disabled={currentPage === Math.ceil(jobs.length / JOBS_PER_PAGE)}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md"
+        >
+          Next
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4 mt-4 mb-4">
         {currentJobs.map(job => (
           <JobCard key={job.id} job={job} />
         ))}

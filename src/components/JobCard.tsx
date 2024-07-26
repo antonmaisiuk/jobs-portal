@@ -13,8 +13,9 @@ export default function JobCard({ job }: JobCardProps) {
 
       <h2 className="text-xl font-bold">{job.title}</h2>
       <div className="flex justify-between items-end">
-        <p className="font-bold">{job.salary}</p>
+        <p className="font-bold">{job.salary || 'Brak stawki'}</p>
         <div className="flex-col text-right">
+          <p className="font-bold">{job.source}</p>
           <p className="text-gray-600">{job.contactName}</p>
           <p className="text-gray-600">{job.updatedAt}</p>
         </div>

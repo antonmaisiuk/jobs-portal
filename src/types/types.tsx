@@ -1,4 +1,5 @@
 export interface Job {
+  source: string,
   id: number,
   createdAt: string,
   updatedAt: string,
@@ -9,6 +10,6 @@ export interface Job {
   salary: string | null,
   // salaryType: '#',
   // salaryCurr: '#',
-  attrs: { name: string; value: string; }[],
+  attrs: [string],
   url: string,
 }
