@@ -1,7 +1,7 @@
 export interface Job {
   source: string,
   id: number,
-  createdAt: string,
+  createdAt: string | null,
   updatedAt: string,
   title: string | null,
   contactName: string | null,
