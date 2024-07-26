@@ -10,6 +10,6 @@ export interface Job {
   salary: string | null,
   // salaryType: '#',
   // salaryCurr: '#',
-  attrs: [string],
+  attrs: string[] | null,
   url: string,
 }
