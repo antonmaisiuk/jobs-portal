@@ -17,15 +17,21 @@ interface JobListProps {
 
 export default function JobList({ jobs }: JobListProps) {
   const [currentPage, setCurrentPage] = useState<number>(() => {
-    // Извлекаем номер страницы из localStorage при первой загрузке компонента
-    const savedPage = localStorage.getItem('currentPage');
-    return savedPage ? Number(savedPage) : 1;
+    if (typeof window !== 'undefined') {
+      // Извлекаем номер страницы из localStorage при первой загрузке компонента
+      const savedPage = localStorage.getItem('currentPage');
+      return savedPage ? Number(savedPage) : 1;
+    }
+    return 1;
   });
 
   useEffect(() => {
-    // Сохраняем текущий номер страницы в localStorage при его изменении
-    localStorage.setItem('currentPage', String(currentPage));
-    window.scrollTo(0, 0);
+    if (typeof window !== 'undefined') {
+      // Сохраняем текущий номер страницы в localStorage при его изменении
+      localStorage.setItem('currentPage', String(currentPage));
+      // Скроллим страницу вверх при изменении номера страницы
+      window.scrollTo(0, 0);
+    }
   }, [currentPage]);
   // const router = useRouter();
 
