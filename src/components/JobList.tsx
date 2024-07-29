@@ -6,10 +6,11 @@ import JobCard from './JobCard';
 import { Job } from '@/types/types';
 import {Pagination} from "@nextui-org/pagination";
 import moment from "moment";
+import _ from "lodash";
 
 // import { useRouter } from 'next/navigation';
 
-const JOBS_PER_PAGE = 15;
+const JOBS_PER_PAGE = 10;
 
 interface JobListProps {
   jobs: Job[];
@@ -46,31 +47,61 @@ export default function JobList({ jobs }: JobListProps) {
   const handlePrevious = () => {
     setCurrentPage(prev => Math.max(prev - 1, 1));
   };
+  const handleFirst = () => {
+    setCurrentPage(1);
+  };
+  const handleLast = () => {
+    setCurrentPage(_.ceil(jobs.length / JOBS_PER_PAGE));
+  };
 
   const handleNext = () => {
     setCurrentPage(prev => Math.min(prev + 1, Math.ceil(jobs.length / JOBS_PER_PAGE)));
   };
 
-  return (
-    <>
-      <div className="flex justify-between">
+  const getPagination = () => (
+    <div className="flex justify-between">
+      <div>
+        <button
+          onClick={handleFirst}
+          // disabled={currentPage === 1}
+          // disabled={!!currentPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+        >
+          1
+        </button>
         <button
           onClick={handlePrevious}
-          disabled={currentPage === 1}
+          // disabled={currentPage === 1}
           // disabled={!!currentPage}
           className="px-4 py-2 bg-blue-500 text-white rounded-md"
         >
           Previous
         </button>
-        <span>Page {currentPage}</span>
+      </div>
+      <span>Page {currentPage}</span>
+      <div>
         <button
           onClick={handleNext}
-          disabled={currentPage === Math.ceil(jobs.length / JOBS_PER_PAGE)}
+          // disabled={currentPage === Math.ceil(jobs.length / JOBS_PER_PAGE)}
           className="px-4 py-2 bg-blue-500 text-white rounded-md"
         >
           Next
         </button>
+        <button
+          onClick={handleLast}
+          // disabled={currentPage === 1}
+          // disabled={!!currentPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md ml-2"
+        >
+          {_.ceil(jobs.length / JOBS_PER_PAGE)}
+        </button>
       </div>
+    </div>
+  )
+
+  return (
+    <>
+      {getPagination()}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4 mt-4 mb-4">
         {currentJobs.map(job => (
@@ -79,24 +110,7 @@ export default function JobList({ jobs }: JobListProps) {
       </div>
       {/*<Pagination isCompact showControls total={currentJobs.length} initialPage={1} />*/}
 
-      <div className="flex justify-between">
-        <button
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-          // disabled={!!currentPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md"
-        >
-          Previous
-        </button>
-        <span>Page {currentPage}</span>
-        <button
-          onClick={handleNext}
-          disabled={currentPage === Math.ceil(jobs.length / JOBS_PER_PAGE)}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md"
-        >
-          Next
-        </button>
-      </div>
+      {getPagination()}
     </>
   );
 }

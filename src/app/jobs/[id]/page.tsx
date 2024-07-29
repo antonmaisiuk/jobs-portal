@@ -10,7 +10,7 @@ interface JobDetailProps {
 
 export default async function JobDetailPage({ params }: JobDetailProps) {
   const jobs: Job[] = await fetchJobs();
-  const job = jobs.find(job => job.id === parseInt(params.id));
+  const job = jobs.find(job => job.id === params.id);
 
   if (!job) {
     return notFound();

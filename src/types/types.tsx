@@ -1,6 +1,6 @@
 export interface Job {
   source: string,
-  id: number,
+  id: string,
   createdAt: string | null,
   updatedAt: string,
   title: string | null,
