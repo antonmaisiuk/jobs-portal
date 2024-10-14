@@ -38,7 +38,9 @@ export default function JobList({ jobs }: JobListProps) {
   const [searchTerm, setSearchTerm] = useState<string>(localStorage.getItem('searchTerm') || '');
 
   useEffect(() => {
-    localStorage.setItem('searchTerm', searchTerm);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('searchTerm', searchTerm);
+    }
   }, [searchTerm]);
 
   const [sourceFilter, setSourceFilter] = useState<string>('');
