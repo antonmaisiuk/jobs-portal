@@ -35,7 +35,14 @@ export default function JobList({ jobs }: JobListProps) {
     }
   }, [currentPage]);
 
-  const [searchTerm, setSearchTerm] = useState<string>(localStorage.getItem('searchTerm') || '');
+  const [searchTerm, setSearchTerm] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      // Извлекаем номер страницы из localStorage при первой загрузке компонента
+      const savedSearchTerm = localStorage.getItem('searchTerm');
+      return savedSearchTerm ? savedSearchTerm : '';
+    }
+    return '';
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
