@@ -35,7 +35,12 @@ export default function JobList({ jobs }: JobListProps) {
     }
   }, [currentPage]);
 
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>(localStorage.getItem('searchTerm') || '');
+
+  useEffect(() => {
+    localStorage.setItem('searchTerm', searchTerm);
+  }, [searchTerm]);
+
   const [sourceFilter, setSourceFilter] = useState<string>('');
 
   const startIndex = (currentPage - 1) * JOBS_PER_PAGE;
